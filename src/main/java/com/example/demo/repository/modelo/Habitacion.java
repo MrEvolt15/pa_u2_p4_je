@@ -28,7 +28,7 @@ public class Habitacion {
 	private BigDecimal valor; 
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "habi_id_hotel")
+	@JoinColumn(name = "habi_hotel_id")
 	private Hotel hotel;
 
 	//set y get

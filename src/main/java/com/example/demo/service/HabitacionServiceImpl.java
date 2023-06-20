@@ -1,44 +1,39 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.example.demo.repository.modelo.Ciudadano;
 import com.example.demo.repository.modelo.Habitacion;
-import com.example.demo.repository.modelo.Hotel;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import com.example.demo.respository.HabitacionRepository;
 import jakarta.transaction.Transactional;
 
-@Repository
+@Service
 @Transactional 
 public class HabitacionServiceImpl implements HabitacionService{
-     
-	@PersistenceContext
-	private EntityManager entityManager;
-	
+	@Autowired
+	private HabitacionRepository habitacionRepository;
 	@Override
 	public void guardar(Habitacion habitacion) {
-		this.entityManager.persist(habitacion);
+		this.habitacionRepository.insertar(habitacion);;
 		
 	}
 
 	@Override
 	public void borrar(Integer id) {
 		Habitacion habEncontrado = this.buscarPorID(id);
-		this.entityManager.remove(habEncontrado);
+		this.habitacionRepository.eliminar(id);;
 		
 	}
 
 	@Override
 	public Habitacion buscarPorID(Integer id) {
 		// TODO Auto-generated method stub
-		return this.entityManager.find(Habitacion.class, id);
+		return this.habitacionRepository.seleccionarPorID(id);
 	}
 
 	@Override
 	public void actualizar(Habitacion habitacion) {
-		this.entityManager.merge(habitacion);
+		this.habitacionRepository.actualizar(habitacion);;
 		
 	}
 

@@ -27,7 +27,7 @@ public class Hotel {
 	@Column(name="hotel_direccion")
 	private String direccion;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "hotel",cascade = CascadeType.ALL)
 	private List<Habitacion> habitaciones;
 
 	//set y get

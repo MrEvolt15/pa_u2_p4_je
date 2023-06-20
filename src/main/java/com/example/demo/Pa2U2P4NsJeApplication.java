@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -9,15 +10,28 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.demo.repository.modelo.Ciudadano;
 import com.example.demo.repository.modelo.Empleado;
+import com.example.demo.service.AutorService;
 import com.example.demo.service.CiudadanoService;
 import com.example.demo.service.EmpleadoService;
+import com.example.demo.service.HabitacionService;
+import com.example.demo.service.HotelService;
+import com.example.demo.service.LibroService;
 
 @SpringBootApplication
 public class Pa2U2P4NsJeApplication implements CommandLineRunner {
 
 	@Autowired
-	private EmpleadoService empleadoService;
+	private HotelService hotelService;
+	@Autowired
+	private HabitacionService habitacionService;
 	
+	@Autowired
+	private LibroService libroService;
+	@Autowired
+	private AutorService autorService;
+	
+	@Autowired
+	private EmpleadoService empleadoService;
 	@Autowired
 	private CiudadanoService ciudadanoService;
 	
@@ -28,40 +42,32 @@ public class Pa2U2P4NsJeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Ciudadano ciud3 = new Ciudadano();
-		ciud3.setApellido("Espinosa2");
-		ciud3.setCedula("154654456");
-		ciud3.setNombre("Joel2");
+		Ciudadano ciu1 = new Ciudadano();
+		ciu1.setNombre("Joel");
+		ciu1.setApellido("Espinosa");
+		ciu1.setCedula("1726333196");
 		
-		Ciudadano ciud2 = new Ciudadano();
-		ciud2.setApellido("Espinosa26");
-		ciud2.setCedula("154654456");
-		ciud2.setNombre("Joel26");
+		Empleado empl1 = new Empleado();
+		empl1.setCargo("Barrendero");
+		empl1.setSueldo(new BigDecimal(160));
 		
+		empl1.setCiudadano(ciu1);
+		ciu1.setEmpleado(empl1);
+		this.empleadoService.guardar(empl1);
+		//this.ciudadanoService.guardar(ciu1);
 		
-		Empleado empl3 = new Empleado();
-		empl3.setCargo("barrendero2");
-		empl3.setSueldo(new BigDecimal(0.51));
+		empl1.setCargo("Gerente");
+		empl1.setSueldo(new BigDecimal(14000));
+		this.empleadoService.actualizar(empl1);
 		
-		Empleado empl4 = new Empleado();
-		empl4.setCargo("barrendero2");
-		empl4.setSueldo(new BigDecimal(0.51));
+		ciu1.setNombre("Juan");
+		ciu1.setApellido("Salinas");
+		//this.ciudadanoService.actualizar(ciu1);
+		this.empleadoService.buscarPorID(1);
+		this.empleadoService.borrar(1);
 		
-	   	
-		ciud3.setEmpleado(empl3);
-		empl4.setCiudadano(ciud2);
-	
-		
-		 this.ciudadanoService.guardar(ciud3);
-		 System.out.println("Se inserto un ciudadano");
-		 
-	     this.empleadoService.guardar(empl4);
-		System.out.println("Se inserto un empleado");
-	     
-		//Empleado emplencontrado= this.empleadoService.buscarPorID(1);
-		//System.err.println(ciud2);
-	   // System.out.println(emplencontrado);
-		
+		//this.ciudadanoService.buscarPorID(1);
+		//this.ciudadanoService.borrar(1);
 		
 	}
 
