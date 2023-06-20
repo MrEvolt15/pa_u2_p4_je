@@ -1,15 +1,16 @@
 package com.example.demo;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.repository.modelo.Ciudadano;
-import com.example.demo.repository.modelo.Empleado;
+import com.example.demo.repository.modelo.Habitacion;
+import com.example.demo.repository.modelo.Hotel;
 import com.example.demo.service.AutorService;
 import com.example.demo.service.CiudadanoService;
 import com.example.demo.service.EmpleadoService;
@@ -41,33 +42,39 @@ public class Pa2U2P4NsJeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Hotel h1 = new Hotel();
+		h1.setDireccion("La marin");
+		h1.setNombre("BuenaVista");
 		
-		Ciudadano ciu1 = new Ciudadano();
-		ciu1.setNombre("Joel");
-		ciu1.setApellido("Espinosa");
-		ciu1.setCedula("1726333196");
+		Habitacion hab1 = new Habitacion();
+		hab1.setNumero("1");
+		hab1.setValor(new BigDecimal(11));
 		
-		Empleado empl1 = new Empleado();
-		empl1.setCargo("Barrendero");
-		empl1.setSueldo(new BigDecimal(160));
+		Habitacion hab2 = new Habitacion();
+		hab2.setNumero("2");
+		hab2.setValor(new BigDecimal(10));
 		
-		empl1.setCiudadano(ciu1);
-		ciu1.setEmpleado(empl1);
-		this.empleadoService.guardar(empl1);
-		//this.ciudadanoService.guardar(ciu1);
+		List <Habitacion> habitaciones = new ArrayList<>();
+		habitaciones.add(hab1);
+		habitaciones.add(hab2);
 		
-		empl1.setCargo("Gerente");
-		empl1.setSueldo(new BigDecimal(14000));
-		this.empleadoService.actualizar(empl1);
+		h1.setHabitaciones(habitaciones);
+		hab1.setHotel(h1);
+		hab2.setHotel(h1);
 		
-		ciu1.setNombre("Juan");
-		ciu1.setApellido("Salinas");
-		//this.ciudadanoService.actualizar(ciu1);
-		this.empleadoService.buscarPorID(1);
-		this.empleadoService.borrar(1);
+		this.hotelService.guardar(h1);
+		//this.habitacionService.guardar(hab2);
+		//this.habitacionService.guardar(hab1);
 		
-		//this.ciudadanoService.buscarPorID(1);
-		//this.ciudadanoService.borrar(1);
+		h1.setNombre("MalaVista");
+		h1.setDireccion("Villaflora");
+		this.hotelService.actualizar(h1);
+		
+		this.hotelService.buscarPorID(1);
+		//this.habitacionService.buscarPorID(2);
+		//this.habitacionService.buscarPorID(1);
+		this.hotelService.borrar(1);
+		//this.habitacionService.borrar(2);
 		
 	}
 
