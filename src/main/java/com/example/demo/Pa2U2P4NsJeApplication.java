@@ -1,16 +1,15 @@
 package com.example.demo;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.repository.modelo.Habitacion;
-import com.example.demo.repository.modelo.Hotel;
+import com.example.demo.repository.modelo.Autor;
+import com.example.demo.repository.modelo.Libro;
 import com.example.demo.service.AutorService;
 import com.example.demo.service.CiudadanoService;
 import com.example.demo.service.EmpleadoService;
@@ -42,39 +41,51 @@ public class Pa2U2P4NsJeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Hotel h1 = new Hotel();
-		h1.setDireccion("La marin");
-		h1.setNombre("BuenaVista");
+		Libro l1 = new Libro();
+		l1.setEditorial("Alhambra");
+		l1.setTitulo("Luna de PLuton");
 		
-		Habitacion hab1 = new Habitacion();
-		hab1.setNumero("1");
-		hab1.setValor(new BigDecimal(11));
+		Libro l2 = new Libro();
+		l2.setEditorial("BuscadoresTM");
+		l2.setTitulo("NO se que poner");
 		
-		Habitacion hab2 = new Habitacion();
-		hab2.setNumero("2");
-		hab2.setValor(new BigDecimal(10));
+		Autor a1 = new Autor();
+		a1.setApellido("Espinosa");
+		a1.setNombre("Joel");
+
+		Autor a2 = new Autor();
+		a2.setApellido("Soria");
+		a2.setNombre("Nelson");
 		
-		List <Habitacion> habitaciones = new ArrayList<>();
-		habitaciones.add(hab1);
-		habitaciones.add(hab2);
+		Set<Autor> autores = new HashSet<>();
+		autores.add(a2);
+		autores.add(a1);
 		
-		h1.setHabitaciones(habitaciones);
-		hab1.setHotel(h1);
-		hab2.setHotel(h1);
+		Set<Libro> libros = new HashSet<>();
+		libros.add(l2);
+		libros.add(l1);
 		
-		this.hotelService.guardar(h1);
-		//this.habitacionService.guardar(hab2);
-		//this.habitacionService.guardar(hab1);
+		l1.setAutores(autores);
+		l2.setAutores(autores);
+		a1.setLibros(libros);
+		a2.setLibros(libros);
 		
-		h1.setNombre("MalaVista");
-		h1.setDireccion("Villaflora");
-		this.hotelService.actualizar(h1);
+		this.autorService.guardar(a2);
+		this.autorService.guardar(a1);
 		
-		this.hotelService.buscarPorID(1);
-		//this.habitacionService.buscarPorID(2);
-		//this.habitacionService.buscarPorID(1);
-		this.hotelService.borrar(1);
-		//this.habitacionService.borrar(2);
+		//this.libroService.guardar(l2);
+		//this.libroService.guardar(l1);
+		
+		a2.setApellido("Perez");
+		a1.setNombre("Juan");
+		this.autorService.actualizar(a1);
+		this.autorService.actualizar(a2);
+		
+		this.autorService.buscarPorID(1);
+		this.libroService.buscarPorID(2);
+		
+		this.autorService.borrar(2);
+		this.libroService.borrar(1);
 		
 	}
 
